@@ -34,32 +34,10 @@ const EditEmployee = () => {
         } else {
             setFieldValue('f_image', null);
         }
-    };
 
-    const isEmptyObject = obj => {
-        return Object.keys(obj).length === 0 && obj.constructor === Object;
     };
-
 
     const handleSubmit = async (values, { setSubmitting }) => {
-        console.log(values);
-
-        // Convert values to FormData
-        const formData = new FormData();
-
-        // Append each value to FormData
-        for (const key in values) {
-            if (values[key] instanceof File) {
-                // Handle file separately
-                if (values[key]) {
-                    formData.append(key, values[key]);
-                }
-            } else if (values[key] !== null && !isEmptyObject(values[key])) {
-                // Handle other fields
-                formData.append(key, values[key]);
-            }
-        }
-
         try {
             Swal.fire({
                 title: 'Updating Employee...',
@@ -72,11 +50,17 @@ const EditEmployee = () => {
                 }
             });
 
-            // Send the PATCH request to the server
+            // Create FormData object
+            const formData = new FormData();
+            Object.keys(values).forEach(key => {
+                formData.append(key, values[key]);
+            });
+
+            // Send the PATCH request to the server with FormData
             const response = await axios.put(url, formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+                    'Content-Type': 'multipart/form-data'
+                }
             });
 
             const { success, message } = response.data;
@@ -107,8 +91,6 @@ const EditEmployee = () => {
             setSubmitting(false);
         }
     };
-
-
 
 
     return (
