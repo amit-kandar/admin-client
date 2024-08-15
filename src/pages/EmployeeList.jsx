@@ -152,7 +152,7 @@ const EmployeeList = () => {
                         />
                     </div>
 
-                    <Pagination currentPage={currentPage} usersPerPage={usersPerPage} users={users} paginate={paginate} nextPage={nextPage} prevPage={prevPage} goToFirstPage={goToFirstPage} goToLastPage={goToLastPage} />
+                    <Pagination currentPage={currentPage} usersPerPage={usersPerPage} paginate={paginate} nextPage={nextPage} prevPage={prevPage} goToFirstPage={goToFirstPage} goToLastPage={goToLastPage} totalPages={totalPages} />
                 </div>
             </div>
         </div>
