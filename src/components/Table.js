@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Table = ({ columns, filteredUsers, deleteUser, sortField, sortDirection, handleSort }) => {
-    console.log("Filtered", filteredUsers);
 
     // Mapping of column names to field names
     const colName = {
