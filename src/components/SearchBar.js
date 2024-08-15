@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const SearchBar = ({ handleSearch, handleSelectAll, handleDeleteSelected, showDeleteButton, handleDismiss, usersPerPage, setUsersPerPage }) => {
+const SearchBar = ({ handleSearch, usersPerPage, setUsersPerPage }) => {
     const [isShow, setIsShow] = useState(false);
     const users_on_page = [5, 10, 20, 50, 100];
     const dropdownRef = useRef(null);

@@ -54,7 +54,6 @@ const EmployeeList = () => {
 
     const deleteUser = async (f_id) => {
         try {
-            // Show confirmation dialog
             const result = await Swal.fire({
                 title: 'Are you sure?',
                 text: "Do you really want to delete this user? This action cannot be undone.",
@@ -66,14 +65,11 @@ const EmployeeList = () => {
             });
 
             if (result.isConfirmed) {
-                // Remove user from local state immediately for a better user experience
                 const updatedUsers = users.filter(user => user.f_id !== f_id);
                 setUsers(updatedUsers);
 
-                // Send DELETE request to the server
                 await axios.delete(`${url}/${f_id}`);
 
-                // Show success message
                 Swal.fire({
                     title: 'Deleted!',
                     text: 'The user has been deleted successfully.',
@@ -81,7 +77,6 @@ const EmployeeList = () => {
                     confirmButtonText: 'OK'
                 });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                // Show a message if the deletion is canceled
                 Swal.fire({
                     title: 'Cancelled',
                     text: 'The user is safe!',
@@ -90,7 +85,6 @@ const EmployeeList = () => {
                 });
             }
         } catch (error) {
-            // Handle any errors that occur during the delete request
             Swal.fire({
                 title: 'Failed!',
                 text: 'There was an error deleting the user. Please try again later.',
@@ -101,19 +95,10 @@ const EmployeeList = () => {
         }
     };
 
-
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
         setCurrentPage(1);
     };
-
-    // const indexOfLastUser = currentPage * usersPerPage;
-    // const indexOfFirstUser = indexOfLastUser - usersPerPage;
-
-    const filteredUsers = users.filter(user =>
-        user.f_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.f_email.toLowerCase().includes(searchTerm.toLowerCase())
-    ).slice(0, usersPerPage);
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -142,8 +127,7 @@ const EmployeeList = () => {
         const newSortDirection = sortField === field && sortDirection === 'asc' ? 'desc' : 'asc';
         setSortField(field);
         setSortDirection(newSortDirection);
-        fetchUsers();
-        setCurrentPage(1);
+        setCurrentPage(1);  // Reset to the first page when sorting changes
     };
 
     return (
@@ -160,7 +144,7 @@ const EmployeeList = () => {
                     <div className='w-full overflow-x-scroll xl:overflow-hidden'>
                         <Table
                             columns={columns}
-                            filteredUsers={filteredUsers}
+                            filteredUsers={users}
                             deleteUser={deleteUser}
                             sortField={sortField}
                             sortDirection={sortDirection}
@@ -172,7 +156,6 @@ const EmployeeList = () => {
                 </div>
             </div>
         </div>
-
     );
 };
 
